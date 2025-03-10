@@ -8,16 +8,49 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(AppState.self) private var appState
+    @State private var isLoading = true
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        Group {
+            if isLoading {
+                ProgressView("...")
+            } else {
+                switch appState.currentView {
+                case .login:
+                    LoginView()
+                case .completeProfile:
+                    CompleteProfileView()
+                case .tabBar:
+                    TabBarView()
+                }
+            }
         }
-        .padding()
+        .task {
+            await appState.checkUserStatus()
+            isLoading = false
+        }
     }
 }
+//struct ContentView: View {
+//    @Environment(AppState.self) private var appState
+//    
+//    var body: some View {
+//        Group {
+//            switch appState.currentView {
+//            case .login:
+//                LoginView()
+//            case .completeProfile:
+//                CompleteProfileView()
+//            case .tabBar:
+//                TabBarView()
+//            }
+//        }
+//        .task {
+//            await appState.checkUserStatus()
+//        }
+//    }
+//}
 
 #Preview {
     ContentView()
