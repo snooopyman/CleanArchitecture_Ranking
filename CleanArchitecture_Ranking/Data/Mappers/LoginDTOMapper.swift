@@ -6,7 +6,7 @@
 //
 
 struct LoginDTOMapper {
-    static func map(_ dto: LoginDTO) -> Login {
-        return Login(isUserInApi: dto.isUserInApi)
+    static func map(_ dto: LoginDTO) -> LoginModel {
+        return LoginModel(isUserInApi: dto.isUserInApi)
     }
 }

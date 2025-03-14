@@ -8,8 +8,12 @@
 import SwiftUI
 
 struct LoginView: View {
-    @State private var viewModel = LoginViewModel()
+    @State private var viewModel: LoginViewModel
     @Environment(AppState.self) private var appState
+    
+    init(viewModel: LoginViewModel) {
+        self._viewModel = State(initialValue: viewModel)
+    }
     
     var body: some View {
         NavigationStack {
@@ -52,7 +56,7 @@ struct LoginView: View {
                     Spacer()
                     
                     NavigationLink {
-//                        RecoverPasswordView()
+                        //                        RecoverPasswordView()
                     } label: {
                         Text("Did you forget your password?")
                             .font(.footnote)
@@ -65,7 +69,6 @@ struct LoginView: View {
                     Button(action: {
                         Task {
                             await viewModel.login()
-                            await appState.checkUserStatus()
                         }
                     }) {
                         Text("Sign In")
@@ -100,8 +103,8 @@ struct LoginView: View {
                 HStack(spacing: 10) {
                     Button(action: {
                         Task {
-//                            await viewModel.loginWithGoogle()
-//                            await appState.checkUserStatus()
+                            //                            await viewModel.loginWithGoogle()
+                            //                            await appState.checkUserStatus()
                         }
                     }) {
                         Image(systemName: "playstation.logo")
@@ -114,8 +117,9 @@ struct LoginView: View {
                     }
                     
                     Button(action: {
-//                        viewModel.loginWithApple
-//                        await appState.checkUserStatus()
+                        //                        viewModel.loginWithApple
+                        //                        await appState.checkUserStatus()
+                        
                     }) {
                         Image(systemName: "apple.logo")
                             .frame(maxWidth: .infinity)
@@ -133,8 +137,22 @@ struct LoginView: View {
 }
 
 #Preview {
-    LoginView()
-        .environment(AppState())
+    let authRepository = AuthRepositoryLive()
+    let authUseCase = AuthUseCaseLive(authRepository: authRepository)
+    
+    let loginRepository = LoginRepositoryMock()
+    let checkLoginUseCase = CheckLoginUseCaseLive(repository: loginRepository)
+    
+    let appState = AppState()
+    let viewModel = LoginViewModel(
+        authUseCase: authUseCase,
+        checkLoginUseCase: checkLoginUseCase,
+        appState: appState
+    )
+    
+    
+    LoginView(viewModel: viewModel)
+        .environment(appState)
 }
 
 struct LabelledDivider: View {

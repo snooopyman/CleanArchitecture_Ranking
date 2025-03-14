@@ -7,7 +7,7 @@
 
 import Foundation
 
-actor LoginRepository: LoginRepositoryType {
+actor LoginRepositoryLive: LoginRepositoryType {
     private let apiDataSource: APIDataSourceType
     private let errorMapper: LoginDomainErrorMapper
     
@@ -16,13 +16,12 @@ actor LoginRepository: LoginRepositoryType {
         self.errorMapper = errorMapper
     }
     
-    func checkLogin() async -> Result<Login, LoginDomainError> {
+    func checkLogin() async -> Result<LoginDTO, LoginDomainError> {
         let result = await apiDataSource.login()
         
         switch result {
         case .success(let loginDTO):
-            let login = LoginDTOMapper.map(loginDTO)
-            return .success(login)
+            return .success(loginDTO)
         case .failure(let error):
             return .failure(errorMapper.map(error: error))
         }

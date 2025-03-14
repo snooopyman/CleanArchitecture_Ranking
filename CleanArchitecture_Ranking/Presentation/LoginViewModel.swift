@@ -5,7 +5,7 @@
 //  Created by Armando Cáceres on 28/2/25.
 //
 
-import Foundation
+import FirebaseAuth
 
 @MainActor
 @Observable
@@ -14,17 +14,106 @@ class LoginViewModel {
     var password: String = ""
     var errorMessage: String? = nil
     
-    private let authService: AuthServiceType
+    private let authUseCase: AuthUseCaseType
+    private let checkLoginUseCase: CheckLoginUseCaseType
+    private let appState: AppState
     
-    init(authService: AuthServiceType = AuthService()) {
-        self.authService = authService
+    init(
+        authUseCase: AuthUseCaseType,
+        checkLoginUseCase: CheckLoginUseCaseType,
+        appState: AppState
+    ) {
+        self.authUseCase = authUseCase
+        self.checkLoginUseCase = checkLoginUseCase
+        self.appState = appState
     }
     
     func login() async {
         do {
-            try await authService.signInWithEmailPassword(withEmail: email, password: password)
+            try await authUseCase.signInWithEmailPassword(withEmail: email, password: password)
+            
+            await checkUserStatus()
         } catch {
             errorMessage = error.localizedDescription
         }
     }
+    
+    func loginWithGoogle() async {
+        do {
+            try await authUseCase.signInWithGoogle()
+            await checkUserStatus()
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+    
+    func loginWithApple() async {
+        do {
+            try await authUseCase.signInWithApple()
+            await checkUserStatus()
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+    
+    func checkUserStatus() async {
+        guard Auth.auth().currentUser != nil else {
+            appState.currentView = .login
+            return
+        }
+        
+        let result = await checkLoginUseCase.execute()
+        
+        switch result {
+        case .success(let loginModel):
+            appState.currentView = loginModel.isUserInApi ? .tabBar : .completeProfile
+        case .failure:
+            appState.currentView = .login
+        }
+    }
 }
+
+//import Foundation
+//
+//@MainActor
+//@Observable
+//class LoginViewModel {
+//    var email: String = ""
+//    var password: String = ""
+//    var errorMessage: String? = nil
+//    
+//    private let authUseCase: AuthUseCaseType
+//    private let checkLoginUseCase: CheckLoginUseCaseType
+//    private let appState: AppState
+//    
+//    init(
+//        authUseCase: AuthUseCaseType,
+//        checkLoginUseCase: CheckLoginUseCaseType,
+//        appState: AppState
+//    ) {
+//        self.authUseCase = authUseCase
+//        self.checkLoginUseCase = checkLoginUseCase
+//        self.appState = appState
+//    }
+//    
+//    func login() async {
+//        do {
+//            try await authUseCase.signInWithEmailPassword(withEmail: email, password: password)
+//            
+//            let result = await checkLoginUseCase.execute()
+//            
+//            switch result {
+//            case .success(let loginModel):
+//                if loginModel.isUserInApi {
+//                    appState.currentView = .tabBar
+//                } else {
+//                    appState.currentView = .completeProfile
+//                }
+//            case .failure(let error):
+//                errorMessage = error.localizedDescription
+//            }
+//        } catch {
+//            errorMessage = error.localizedDescription
+//        }
+//    }
+//}

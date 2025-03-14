@@ -1,10 +1,10 @@
 //
-//  Login.swift
+//  LoginModel.swift
 //  PowerRanking
 //
 //  Created by Armando Cáceres on 28/2/25.
 //
 
-struct Login {
+struct LoginModel {
     let isUserInApi: Bool
 }

@@ -9,16 +9,20 @@ import SwiftUI
 
 struct ContentView: View {
     @Environment(AppState.self) private var appState
-    @State private var isLoading = true
+    @State private var viewModel: LoginViewModel
+    
+    init(viewModel: LoginViewModel) {
+        self._viewModel = State(initialValue: viewModel)
+    }
     
     var body: some View {
         Group {
-            if isLoading {
-                ProgressView("...")
+            if appState.isLoading {
+                ProgressView("Loading...")
             } else {
                 switch appState.currentView {
                 case .login:
-                    LoginView()
+                    LoginView(viewModel: viewModel)
                 case .completeProfile:
                     CompleteProfileView()
                 case .tabBar:
@@ -27,31 +31,8 @@ struct ContentView: View {
             }
         }
         .task {
-            await appState.checkUserStatus()
-            isLoading = false
+            await viewModel.checkUserStatus()
+            appState.isLoading = false
         }
     }
-}
-//struct ContentView: View {
-//    @Environment(AppState.self) private var appState
-//    
-//    var body: some View {
-//        Group {
-//            switch appState.currentView {
-//            case .login:
-//                LoginView()
-//            case .completeProfile:
-//                CompleteProfileView()
-//            case .tabBar:
-//                TabBarView()
-//            }
-//        }
-//        .task {
-//            await appState.checkUserStatus()
-//        }
-//    }
-//}
-
-#Preview {
-    ContentView()
 }
