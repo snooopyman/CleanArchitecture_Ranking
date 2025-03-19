@@ -1,10 +1,10 @@
 //
-//  LoginRepositoryType.swift
+//  CheckLoginRepositoryType.swift
 //  PowerRanking
 //
 //  Created by Armando Cáceres on 28/2/25.
 //
 
-protocol LoginRepositoryType: Sendable {
+protocol CheckLoginRepositoryType: Sendable {
     func checkLogin() async -> Result<LoginDTO, LoginDomainError>
 }

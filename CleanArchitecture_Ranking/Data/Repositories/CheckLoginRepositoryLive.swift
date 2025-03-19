@@ -1,5 +1,5 @@
 //
-//  LoginRepository.swift
+//  CheckLoginRepositoryLive.swift
 //  PowerRanking
 //
 //  Created by Armando Cáceres on 28/2/25.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-actor LoginRepositoryLive: LoginRepositoryType {
+actor CheckLoginRepositoryLive: CheckLoginRepositoryType {
     private let apiDataSource: APIDataSourceType
     private let errorMapper: LoginDomainErrorMapper
     

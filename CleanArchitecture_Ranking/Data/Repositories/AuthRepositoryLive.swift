@@ -6,24 +6,28 @@
 //
 
 import Foundation
-@preconcurrency import FirebaseAuth
+import FirebaseAuth
 
-actor AuthRepositoryLive: AuthRepositoryType {
-//    private let auth: AuthRepositoryType
-    
-//    init(auth: AuthRepositoryType) {
-//        self.auth = auth
-//    }
-//    
+actor AuthRepositoryLive: AuthRepositoryType {    
     func signInWithEmailPassword(withEmail email: String, password: String) async throws {
-        try await Auth.auth().signIn(withEmail: email, password: password)
+        Task {
+            Auth.auth().signIn(withEmail: email, password: password)
+        }
     }
     
     func signInWithGoogle() async throws {
-//        try await auth.signInWithGoogle()
+        //TODO: Need implementation
     }
     
     func signInWithApple() async throws {
-//        try await auth.signInWithApple()
+        //TODO: Need implementation
+    }
+    
+    func getCurrentUser() async -> FirebaseUserDTO? {
+        guard let user = Auth.auth().currentUser else {
+            return nil
+        }
+        return FirebaseUserDTO(uid: user.uid, email: user.email)
     }
 }
+

@@ -25,4 +25,11 @@ actor AuthUseCaseLive: AuthUseCaseType {
     func signInWithApple() async throws {
         try await authRepository.signInWithApple()
     }
+    
+    func getCurrentUser() async -> FirebaseUserModel? {
+        guard let firebaseUserDTO = await authRepository.getCurrentUser() else {
+            return nil
+        }
+        return FirebaseUserDTOMapper.map(firebaseUserDTO)
+    }
 }

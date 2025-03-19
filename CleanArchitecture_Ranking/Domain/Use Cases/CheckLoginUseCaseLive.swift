@@ -8,9 +8,9 @@
 import Foundation
 
 actor CheckLoginUseCaseLive: CheckLoginUseCaseType {
-    private let repository: LoginRepositoryType
+    private let repository: CheckLoginRepositoryType
     
-    init(repository: LoginRepositoryType) {
+    init(repository: CheckLoginRepositoryType) {
         self.repository = repository
     }
     

@@ -140,7 +140,7 @@ struct LoginView: View {
     let authRepository = AuthRepositoryLive()
     let authUseCase = AuthUseCaseLive(authRepository: authRepository)
     
-    let loginRepository = LoginRepositoryMock()
+    let loginRepository = CheckLoginRepositoryMock()
     let checkLoginUseCase = CheckLoginUseCaseLive(repository: loginRepository)
     
     let appState = AppState()
