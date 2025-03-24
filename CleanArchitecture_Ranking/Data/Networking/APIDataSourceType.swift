@@ -7,4 +7,5 @@
 
 protocol APIDataSourceType: Sendable {
     func login() async -> Result<LoginDTO, HTTPClientError>
+    func getRanking() async -> Result<RankingDTO, HTTPClientError>
 }

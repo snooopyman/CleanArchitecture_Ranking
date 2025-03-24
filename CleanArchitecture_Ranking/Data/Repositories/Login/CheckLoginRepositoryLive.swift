@@ -5,18 +5,16 @@
 //  Created by Armando Cáceres on 28/2/25.
 //
 
-import Foundation
-
 actor CheckLoginRepositoryLive: CheckLoginRepositoryType {
     private let apiDataSource: APIDataSourceType
-    private let errorMapper: LoginDomainErrorMapper
+    private let errorMapper: APIDomainErrorMapper
     
-    init(apiDataSource: APIDataSourceType, errorMapper: LoginDomainErrorMapper) {
+    init(apiDataSource: APIDataSourceType, errorMapper: APIDomainErrorMapper) {
         self.apiDataSource = apiDataSource
         self.errorMapper = errorMapper
     }
     
-    func checkLogin() async -> Result<LoginDTO, LoginDomainError> {
+    func checkLogin() async -> Result<LoginDTO, APIDomainError> {
         let result = await apiDataSource.login()
         
         switch result {

@@ -1,11 +1,11 @@
 //
-//  LoginDomainError.swift
+//  APIDomainError.swift
 //  PowerRanking
 //
 //  Created by Armando Cáceres on 28/2/25.
 //
 
-enum LoginDomainError: Error, Sendable {
+enum APIDomainError: Error, Sendable {
     case generic
     case notAuthenticated
     case apiError(HTTPClientError)

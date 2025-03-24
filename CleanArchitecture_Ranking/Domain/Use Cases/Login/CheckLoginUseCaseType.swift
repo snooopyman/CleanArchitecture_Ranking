@@ -6,5 +6,5 @@
 //
 
 protocol CheckLoginUseCaseType: Sendable {
-    func execute() async -> Result<LoginModel, LoginDomainError>
+    func execute() async -> Result<LoginModel, APIDomainError>
 }

@@ -5,8 +5,6 @@
 //  Created by Armando Cáceres on 28/2/25.
 //
 
-import Foundation
-
 actor CheckLoginUseCaseLive: CheckLoginUseCaseType {
     private let repository: CheckLoginRepositoryType
     
@@ -14,7 +12,7 @@ actor CheckLoginUseCaseLive: CheckLoginUseCaseType {
         self.repository = repository
     }
     
-    func execute() async -> Result<LoginModel, LoginDomainError> {
+    func execute() async -> Result<LoginModel, APIDomainError> {
         let result = await repository.checkLogin()
         
         switch result {

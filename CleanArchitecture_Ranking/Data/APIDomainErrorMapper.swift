@@ -1,5 +1,5 @@
 //
-//  LoginDomainErrorMapper.swift
+//  APIDomainErrorMapper.swift
 //  CleanArchitecture_Ranking
 //
 //  Created by Armando Cáceres on 28/2/25.
@@ -7,8 +7,8 @@
 
 import Foundation
 
-final class LoginDomainErrorMapper: Sendable {
-    func map(error: HTTPClientError) -> LoginDomainError {
+final class APIDomainErrorMapper: Sendable {
+    func map(error: HTTPClientError) -> APIDomainError {
         switch error {
         case .unauthorized:
             return .notAuthenticated

@@ -21,8 +21,8 @@ struct CleanArchitecture_RankingApp: App {
         self.authUseCase = AuthUseCaseLive(authRepository: authRepository)
         
         let loginRepository = CheckLoginRepositoryLive(
-            apiDataSource: APILoginDataSource(),
-            errorMapper: LoginDomainErrorMapper()
+            apiDataSource: APIDataSource(),
+            errorMapper: APIDomainErrorMapper()
         )
 //        let loginRepository = CheckLoginRepositoryMock()
         self.checkLoginUseCase = CheckLoginUseCaseLive(repository: loginRepository)

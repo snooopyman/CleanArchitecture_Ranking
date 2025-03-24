@@ -5,8 +5,6 @@
 //  Created by Armando Cáceres on 13/3/25.
 //
 
-import Foundation
-
 actor AuthUseCaseLive: AuthUseCaseType {
     private let authRepository: AuthRepositoryType
     

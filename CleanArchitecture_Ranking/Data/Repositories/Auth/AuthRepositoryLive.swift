@@ -5,10 +5,9 @@
 //  Created by Armando Cáceres on 13/3/25.
 //
 
-import Foundation
 import FirebaseAuth
 
-actor AuthRepositoryLive: AuthRepositoryType {    
+actor AuthRepositoryLive: AuthRepositoryType {
     func signInWithEmailPassword(withEmail email: String, password: String) async throws {
         Task {
             Auth.auth().signIn(withEmail: email, password: password)
@@ -30,4 +29,3 @@ actor AuthRepositoryLive: AuthRepositoryType {
         return FirebaseUserDTO(uid: user.uid, email: user.email)
     }
 }
-

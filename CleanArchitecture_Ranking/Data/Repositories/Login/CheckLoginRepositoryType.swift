@@ -6,5 +6,5 @@
 //
 
 protocol CheckLoginRepositoryType: Sendable {
-    func checkLogin() async -> Result<LoginDTO, LoginDomainError>
+    func checkLogin() async -> Result<LoginDTO, APIDomainError>
 }
