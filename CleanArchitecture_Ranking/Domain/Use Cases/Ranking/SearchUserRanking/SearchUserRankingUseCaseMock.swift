@@ -6,7 +6,7 @@
 //
 
 class SearchUserRankingUseCaseMock: SearchUserRankingUseCaseType {
-    func execute(ranking: RankingModel, searchText: String) -> RankingModel {
+    func execute(searchText: String, in ranking: RankingModel) -> RankingModel? {
         return ranking
     }
 }

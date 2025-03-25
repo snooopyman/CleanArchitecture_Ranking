@@ -18,7 +18,7 @@ struct FilterView: View {
             Image(systemName: "slider.horizontal.3")
                 .padding(10)
                 .background(.white)
-                .cornerRadius(10)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
                 .shadow(radius: 2)
                 .onTapGesture {
                     isFilterModalPresented = true

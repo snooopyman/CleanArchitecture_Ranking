@@ -112,7 +112,7 @@ struct LoginView: View {
                             .padding()
                             .background(.black)
                             .foregroundColor(.white)
-                            .cornerRadius(8)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
                             .padding(.horizontal)
                     }
                     
@@ -126,7 +126,7 @@ struct LoginView: View {
                             .padding()
                             .background(.black)
                             .foregroundColor(.white)
-                            .cornerRadius(8)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
                             .padding(.horizontal)
                     }
                 }

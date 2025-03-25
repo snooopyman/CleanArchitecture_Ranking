@@ -29,7 +29,7 @@ struct SearchBarView: View {
             }
             .padding(10)
             .background(.white)
-            .cornerRadius(10)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
             .overlay(
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(.clear)
@@ -37,4 +37,8 @@ struct SearchBarView: View {
             .shadow(radius: 2)
         }
     }
+}
+
+#Preview {
+    SearchBarView(searchText: .constant("snooopyman"))
 }

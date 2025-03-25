@@ -6,6 +6,5 @@
 //
 
 protocol SearchUserRankingUseCaseType {
-    func execute(ranking: RankingModel, searchText: String) -> RankingModel
-    func execute(ranking: PowerliftingRanking, searchText: String) -> PowerliftingRanking
+    func execute(searchText: String, in ranking: RankingModel) -> RankingModel?
 }

@@ -22,16 +22,16 @@ struct CounterWithActionsView: View {
                 LazyHStack {
                     SelectionButton(option: .elite, selectedOption: $selectedLevel)
                         .padding(10)
-                        .cornerRadius(10)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
                     SelectionButton(option: .advanced, selectedOption: $selectedLevel)
                         .padding(10)
-                        .cornerRadius(10)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
                     SelectionButton(option: .middle, selectedOption: $selectedLevel)
                         .padding(10)
-                        .cornerRadius(10)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
                     SelectionButton(option: .noob, selectedOption: $selectedLevel)
                         .padding(10)
-                        .cornerRadius(10)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
             }
         }

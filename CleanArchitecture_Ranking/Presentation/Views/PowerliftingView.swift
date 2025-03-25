@@ -10,7 +10,6 @@ import SwiftUI
 struct PowerliftingView: View {
     @State private var viewModel: RankingViewModel
     @State private var selectedExercise: ExerciseType = .benchpress
-    @State private var searchText: String = ""
     
     init(viewModel: RankingViewModel) {
         self._viewModel = State(initialValue: viewModel)
@@ -27,12 +26,9 @@ struct PowerliftingView: View {
                 
                 HStack {
                     SearchBarView(searchText: $viewModel.searchText)
-                    
                     FilterView(viewModel: viewModel)
-                    
                     NewHitView()
                 }
-                
                 
                 VStack {
                     if viewModel.isLoading {
@@ -41,65 +37,11 @@ struct PowerliftingView: View {
                         Text(errorMessage)
                             .foregroundColor(.red)
                     } else if let ranking = viewModel.getRanking(for: selectedExercise) {
-                        let sortedRanking: [(key: String, user: UserRankingModel)] = {
-                            switch ranking {
-                            case .exercise(let exerciseRanking):
-                                return exerciseRanking
-                                    .sorted(by: { $0.value.wilksScore > $1.value.wilksScore })
-                                    .map { (key: $0.key, user: UserRankingModel(
-                                        id: $0.key,
-                                        username: $0.value.username,
-                                        gender: $0.value.gender, address: $0.value.address,
-                                        birthDate: $0.value.birthDate, level: $0.value.level,
-                                        profilePic: $0.value.profilePic,
-                                        maxLift: $0.value.maxLift,
-                                        wilksScore: $0.value.wilksScore
-                                    )) }
-                                
-                            case .official(let officialRanking):
-                                return officialRanking
-                                    .sorted(by: { $0.value.totalWilksScore > $1.value.totalWilksScore })
-                                    .map { (key: $0.key, user: UserRankingModel(
-                                        id: $0.key,
-                                        username: $0.value.username,
-                                        gender: $0.value.gender, address: $0.value.address,
-                                        birthDate: $0.value.birthDate, level: $0.value.level,
-                                        profilePic: $0.value.profilePic,
-                                        maxLift: nil,
-                                        wilksScore: $0.value.totalWilksScore
-                                    )) }
-                            }
-                        }()
-                        
-                        List {
-                            ForEach(Array(sortedRanking.enumerated()), id: \.element.key) { index, element in
-                                PowerLiftingRowView(
-                                    user: element.user,
-                                    index: index,
-                                    backgroundColor: Color(.systemGray6)
-                                )
-                            }
-                        }
-                        .listStyle(PlainListStyle())
-                        .refreshable {
-                            Task {
-                                await viewModel.fetchRanking()
-                            }
-                        }
-                        
-                        Spacer()
-                        
-                        if let currentUserRanking = viewModel.currentUserRanking,
-                           let currentUserIndex = sortedRanking.firstIndex(where: { $0.key == currentUserRanking.id }) {
-                            
-                            PowerLiftingRowView(
-                                user: currentUserRanking,
-                                index: currentUserIndex,
-                                backgroundColor: .gray
-                            )
-                            .cornerRadius(8)
-                            .padding()
-                        }
+                        RankingListView(
+                            viewModel: viewModel,
+                            ranking: ranking,
+                            selectedExercise: selectedExercise
+                        )
                     }
                 }
             }

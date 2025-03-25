@@ -12,7 +12,7 @@ struct NewHitView: View {
         Image(systemName: "plus")
             .padding(10)
             .background(.white)
-            .cornerRadius(10)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
             .shadow(radius: 2)
     }
 }
